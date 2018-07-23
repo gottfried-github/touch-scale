@@ -1,133 +1,65 @@
-import {ScaleCore} from "scale"
-// import {renderer} from "renderer"
-// import {domIo} from "domIo"
+import {Scale} from "scale"
+// import {Renderer} from "renderer"
 
-const core = new ScaleCore()
-
-function Wrapper(el, options) {
-
-  this.transforms = domIo.getTransforms(this.el)
-  this.origin = domIo.getOrigin(this.el)
-  // this.rects = domIo.getRects(this.el)
-}
-
-Wrapper.prototype.scaleStart = function(gesture) {
-  // console.log("scaleStart, gesture: ", gesture)
-  const coords = this.core.initializeMovement(gesture, this.transforms, this.rects, this.origin)
-  // console.log("scaleStart, initMovement return", coords)
-
-  this.transforms.translate = coords.translate
-  this.origin = coords.origin
-
-  return this
-}
-
-Wrapper.prototype.scaleMove = function(gesture) {
-  // console.log("scaleMove, gesture: ", gesture)
-  const calculated = this.core.calculateDiscretePoint(gesture, this.transforms)
-
-  this.transforms.scale = calculated.scale
-  this.transforms.translate = calculated.translate
-
-  return this
-  // this.domIo.setMatrix(this.el, this.transforms)
-}
-
-Wrapper.prototype.scaleStop = function(gesture) {
-  // console.log("scaleStop, gesture: ", gesture)
-  this.transforms = this.core.finishMovement(gesture, this.transforms, this.origin)
-
-  const vprtDims = this.domIo.getViewportDims()
-
-  // see, if el exceeds parent's area in an ugly way
-  const translateBound = this.core.encounterBounds(this.transforms, this.rects, vprtDims)
-
-  this.transforms.translate = translateBound
-
-  return this
-  // this.domIo.setMatrix(this.el, this.transforms)
-  // this.rects = this.domIo.getRects(this.el)
-
-  // if (
-  //   transformsBounded.translateX != this.transforms.translateX
-  //   || transformsBounded.translateY != this.transforms.translateY
-  // ) {
-  //   this.tweenIn()
-  // }
-}
-
-Wrapper.prototype.updateTransformData = function(transforms, origin) {
-
-  //
-  this.transforms = Object.assign(this.transforms, transforms)
-  this.origin = Object.assign(this.origin, origin)
-}
-
-function Scale(el, options) {
+function WrapperConstr(el) {
   this.el = el
-  this.options = options || {}
-  // this.scaleFactor = options.scaleFactor;
-  // this.transitionClass = options.transitionClass || 'scalable-transition'
-
-  // this.core = new ScaleCore()
-  // this.domIo = new ScaleDomIo()
-
-  // set the initial value of transform to matrix, in the element
-  this.
-
-
-
-
-
-  // console.log("scaler: ", this)
+  this.core = new Scale()
+  // this.renderer = new Renderer(el)
 }
 
-Scale.prototype.scaleStart = function(gesture) {
-  // console.log("scaleStart, gesture: ", gesture)
-  const coords = this.core.initializeMovement(gesture, this.transforms, this.rects, this.origin)
-  // console.log("scaleStart, initMovement return", coords)
+Wrapper.prototype.scaleStart = function(pinch) {
+  const rects = getRects(el)
 
-  this.transforms.translate = coords.translate
-  this.origin = coords.origin
+  const calculation = this.core.calculateStart(pinch, this.transforms, rects)
+  this.transforms.origin = calculation.origin
+  this.transforms.translate = calculation.translate
 
-  this.domIo.setOrigin(this.el, this.origin)
-  this.domIo.setMatrix(this.el, this.transforms)
+  setOrigin(this.el, this.transforms.origin)
+  setMatrix(this.el, this.transforms.scale, this.transforms.translate)
+
+  this.rAf()
 }
 
-Scale.prototype.scaleMove = function(gesture) {
-  // console.log("scaleMove, gesture: ", gesture)
-  const calculated = this.core.calculateDiscretePoint(gesture, this.transforms)
+Wrapper.prototype.scaleMove = function(pinch) {
+  const calculated = this.core.calculateMove(pinch, this.transforms.scale, this.transforms.translate)
 
-  this.transforms.scale = calculated.scale
+  this.transforms.translate = calculate.translate
+  this.transforms.scale = calculate.scale
+}
+
+Wrapper.prototype.scaleStop = function(pinch) {
+  window.cancelAnimationFrame(this.rAfId)
+
+  const calculated = this.core.calculateStop(pinch, this.transforms.scale, this.transforms.translate)
+
   this.transforms.translate = calculated.translate
+  this.transforms.scale = calculated.scale
 
-  this.domIo.setMatrix(this.el, this.transforms)
-}
+  setMatrix(this.el, this.transforms.scale, this.transforms.translate)
+  const rects = getRects(this.el)
+  const vprtDims = getViewportDims()
 
-Scale.prototype.scaleStop = function(gesture) {
-  // console.log("scaleStop, gesture: ", gesture)
-  this.transforms = this.core.finishMovement(gesture, this.transforms, this.origin)
-
-  const vprtDims = this.domIo.getViewportDims()
-
-  // see, if el exceeds parent's area in an ugly way
-  const translateBound = this.core.encounterBounds(this.transforms, this.rects, vprtDims)
-
-  // this.transforms.translate = translateBound
-  this.domIo.setMatrix(this.el, this.transforms)
-  this.rects = this.domIo.getRects(this.el)
-
-  // if (
-  //   transformsBounded.translateX != this.transforms.translateX
-  //   || transformsBounded.translateY != this.transforms.translateY
-  // ) {
-  //   this.tweenIn()
+  // const bounded = this.core.encounterBounds(this.transforms.translate, rects, vprtHeight)
+  // if (bounded.translate.x != this.transforms.translate.x || bounded.translate.y != this.transforms.translate.y) {
+  //   // tween the element inside the container
   // }
 }
 
-Scale.prototype.updateTransformData = function(transforms, origin) {
+/**
 
-  //
-  this.transforms = Object.assign(this.transforms, transforms)
-  this.origin = Object.assign(this.origin, origin)
+*/
+Wrapper.prototype.rAf = function() {
+  this.rAfId = window.requestAnimationFrame(() => {
+    // this.renderFrame()
+
+    this.renderFrame()
+    this.rAfId = this.rAf()
+  })
+}
+
+/**
+
+*/
+Wrapper.prototype.renderFrame = function() {
+  setMatrix(this.el, this.transforms.scale, this.transforms.translate)
 }
