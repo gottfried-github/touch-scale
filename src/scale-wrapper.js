@@ -1,10 +1,8 @@
-import {Scale} from "scale"
-// import {Renderer} from "renderer"
-
-function WrapperConstr(el) {
+function Wrapper(el) {
   this.el = el
-  this.core = new Scale()
-  // this.renderer = new Renderer(el)
+  this.core = new ScaleCore()
+
+  initializeElementsMatrix(this.el)
 }
 
 Wrapper.prototype.scaleStart = function(pinch) {
@@ -21,7 +19,7 @@ Wrapper.prototype.scaleStart = function(pinch) {
 }
 
 Wrapper.prototype.scaleMove = function(pinch) {
-  const calculated = this.core.calculateMove(pinch, this.transforms.scale, this.transforms.translate)
+  const calculated = this.core.calculateMove(pinch)
 
   this.transforms.translate = calculate.translate
   this.transforms.scale = calculate.scale
@@ -30,24 +28,22 @@ Wrapper.prototype.scaleMove = function(pinch) {
 Wrapper.prototype.scaleStop = function(pinch) {
   window.cancelAnimationFrame(this.rAfId)
 
-  const calculated = this.core.calculateStop(pinch, this.transforms.scale, this.transforms.translate)
+  const calculated = this.core.calculateStop(pinch, this.transforms.origin, this.transforms.scale, this.transforms.translate)
 
   this.transforms.translate = calculated.translate
   this.transforms.scale = calculated.scale
 
   setMatrix(this.el, this.transforms.scale, this.transforms.translate)
-  const rects = getRects(this.el)
-  const vprtDims = getViewportDims()
 
+  // const rects = getRects(this.el)
+  // const vprtDims = getViewportDims()
+  //
   // const bounded = this.core.encounterBounds(this.transforms.translate, rects, vprtHeight)
   // if (bounded.translate.x != this.transforms.translate.x || bounded.translate.y != this.transforms.translate.y) {
   //   // tween the element inside the container
   // }
 }
 
-/**
-
-*/
 Wrapper.prototype.rAf = function() {
   this.rAfId = window.requestAnimationFrame(() => {
     // this.renderFrame()
@@ -57,9 +53,6 @@ Wrapper.prototype.rAf = function() {
   })
 }
 
-/**
-
-*/
 Wrapper.prototype.renderFrame = function() {
   setMatrix(this.el, this.transforms.scale, this.transforms.translate)
 }

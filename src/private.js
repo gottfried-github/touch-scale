@@ -37,13 +37,13 @@ function getViewportDims() {
   }
 }
 
-function setMatrix(el, transforms) {
+function setMatrix(el, scale, translate) {
   console.log('setMatrix', transforms)
   const matrixStr = 'matrix(' +
-    transforms.scale.x + ', 0, 0, ' +
-    transforms.scale.y + ', ' +
-    transforms.translate.x + ', ' +
-    transforms.translate.y +
+    scale.x + ', 0, 0, ' +
+    scale.y + ', ' +
+    translate.x + ', ' +
+    translate.y +
     ')'
 
   this.doSetMatrix(el, matrixStr)
