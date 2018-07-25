@@ -1,7 +1,7 @@
 {
   "name": "scale-wrapper",
   "version": "0.0.1",
-  "main": "dist/index.js",
+  "main": "dist/scale-wrapper.js",
   "author": "spti",
   "license": "MIT",
   "scripts": {
