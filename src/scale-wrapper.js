@@ -1,4 +1,4 @@
-function Wrapper(el) {
+function ScaleWrapper(el) {
   this.el = el
   this.core = new ScaleCore()
 
@@ -15,10 +15,10 @@ function Wrapper(el) {
 
 }
 
-Wrapper.prototype.scaleStart = function(pinch) {
-  const rects = getRects(el)
+ScaleWrapper.prototype.scaleStart = function(pinch) {
+  const rects = getRects(this.el)
 
-  const calculation = this.core.calculateStart(pinch, this.transforms, rects)
+  const calculation = this.core.calculateStart(pinch, this.transforms.scale, this.transforms.translate, rects)
   this.transforms.origin = calculation.origin
   this.transforms.translate = calculation.translate
 
@@ -28,14 +28,14 @@ Wrapper.prototype.scaleStart = function(pinch) {
   this.rAf()
 }
 
-Wrapper.prototype.scaleMove = function(pinch) {
+ScaleWrapper.prototype.scaleMove = function(pinch) {
   const calculated = this.core.calculateMove(pinch)
 
-  this.transforms.translate = calculate.translate
-  this.transforms.scale = calculate.scale
+  this.transforms.translate = calculated.translate
+  this.transforms.scale = calculated.scale
 }
 
-Wrapper.prototype.scaleStop = function(pinch) {
+ScaleWrapper.prototype.scaleStop = function(pinch) {
   window.cancelAnimationFrame(this.rAfId)
 
   const calculated = this.core.calculateStop(pinch, this.transforms.origin, this.transforms.scale, this.transforms.translate)
@@ -54,7 +54,7 @@ Wrapper.prototype.scaleStop = function(pinch) {
   // }
 }
 
-Wrapper.prototype.rAf = function() {
+ScaleWrapper.prototype.rAf = function() {
   this.rAfId = window.requestAnimationFrame(() => {
     // this.renderFrame()
 
@@ -63,6 +63,8 @@ Wrapper.prototype.rAf = function() {
   })
 }
 
-Wrapper.prototype.renderFrame = function() {
+ScaleWrapper.prototype.renderFrame = function() {
   setMatrix(this.el, this.transforms.scale, this.transforms.translate)
 }
+
+export {ScaleWrapper}
