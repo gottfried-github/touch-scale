@@ -38,7 +38,7 @@ function getViewportDims() {
 }
 
 function setMatrix(el, scale, translate) {
-  console.log('setMatrix', transforms)
+  // console.log('setMatrix', scale, translate)
   const matrixStr = 'matrix(' +
     scale.x + ', 0, 0, ' +
     scale.y + ', ' +
@@ -46,11 +46,11 @@ function setMatrix(el, scale, translate) {
     translate.y +
     ')'
 
-  this.doSetMatrix(el, matrixStr)
+  doSetMatrix(el, matrixStr)
 }
 
 function doSetMatrix(el, matrixStr) {
-  console.log('setMatrix', matrixStr)
+  // console.log('setMatrix', matrixStr)
   el.style.webkitTransform = matrixStr
   el.style.mozTransform = matrixStr
   el.style.msTransform = matrixStr
@@ -65,5 +65,5 @@ function setOrigin(el, origin) {
 function initializeElementsMatrix(el) {
   // set the initial value of transform to matrix;
   const matrixStr = 'matrix(1, 0, 0, 1, 0, 0)'
-  this.doSetMatrix(el, matrixStr)
+  doSetMatrix(el, matrixStr)
 }
