@@ -3,6 +3,16 @@ function Wrapper(el) {
   this.core = new ScaleCore()
 
   initializeElementsMatrix(this.el)
+
+  const elMatrix = getTransforms(this.el)
+  const elOrigin = getOrigin(this.el)
+
+  this.transforms = {
+    translate: elMatrix.translate,
+    scale: elMatrix.scale,
+    origin: elOrigin
+  }
+
 }
 
 Wrapper.prototype.scaleStart = function(pinch) {
