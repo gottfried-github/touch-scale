@@ -13,3 +13,10 @@ function getViewportWidth() {
     window.innerWidth || document.documentElement.clientWidth
       || (document.querySelector('body') || document.getElementsByTagName('body')[0].clientWidth);
 }
+
+function getViewportDims() {
+  return {
+    width: getViewportWidth(),
+    height: getViewportHeight()
+  }
+}
