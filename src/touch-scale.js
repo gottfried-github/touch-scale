@@ -1,3 +1,15 @@
+/*
+  Scale elements with a pinch
+
+  * It has, as it's input, pinch events, that have to have `center` and `scale`.
+  * It utilizes the [touch-scale_core](https://github.com/spti/scale-core) to calculate appropriate transforms of the element.
+  * It stores the data about the transforms.
+  * It implements `requestAnimationFrame` to animate rendering.
+  * It uses a bunch of helper methods to render the transforms data onto the element.
+
+  The `scaleMove` method's supposed to be called on `pinchmove` event (or analogous).
+  It calculates the data and stores it. The running `requestAnimationFrame` picks the data up and renders it onto the element.
+*/
 function TouchScale(el) {
   this.el = el
   this.core = new ScaleCore()
