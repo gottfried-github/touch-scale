@@ -15,7 +15,7 @@ gulp.task("build", function() {
       "./src/imports.js",
       "./src/libs/getViewport.js",
       // "./src/libs/getViewport.js",
-      "./src/private.js",
+      // "./src/private.js",
       "./src/scale-wrapper.js"
     ])
     .pipe(concat("scale-wrapper.js"))
