@@ -42,7 +42,8 @@ TouchScaler.prototype.scaleStop = function(pinch) {
 
   window.cancelAnimationFrame(this.rAfId)
 
-  const calculated = this.core.calculateStop(pinch, this.transforms.origin, this.transforms.scale, this.transforms.translate)
+  const rects = matrixRenderer.getRects(this.el)
+  const calculated = this.core.calculateStop(pinch, this.transforms.origin, this.transforms.scale, this.transforms.translate, rects)
 
   this.transforms.translate = calculated.translate
   this.transforms.scale = calculated.scale
