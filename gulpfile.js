@@ -12,7 +12,10 @@ gulp.task('build', function () {
 gulp.task("build", function() {
   return gulp
     .src([
-      "./src/private.js",
+      "./src/imports.js",
+      "./src/libs/getViewport.js",
+      // "./src/libs/getViewport.js",
+      // "./src/private.js",
       "./src/scale-wrapper.js"
     ])
     .pipe(concat("scale-wrapper.js"))
