@@ -1,4 +1,4 @@
-import {ScaleCore} from "scale-core"
+import {TouchScaleCore} from "touch-scale_Core"
 // import {matrixRenderer} from "matrix-renderer"
 
 // https://stackoverflow.com/questions/6942785/window-innerwidth-vs-document-documentelement-clientwidth
@@ -99,7 +99,7 @@ const matrixRenderer = {
 */
 function TouchScale(el) {
   this.el = el
-  this.core = new ScaleCore()
+  this.core = new TouchScaleCore()
 
   // initialize appropriate element's css properties
   matrixRenderer.setMatrix(this.el, {x: 1, y: 1}, {x: 0, y: 0})

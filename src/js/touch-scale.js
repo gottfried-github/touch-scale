@@ -12,7 +12,7 @@
 */
 function TouchScale(el) {
   this.el = el
-  this.core = new ScaleCore()
+  this.core = new TouchScaleCore()
 
   // initialize appropriate element's css properties
   matrixRenderer.setMatrix(this.el, {x: 1, y: 1}, {x: 0, y: 0})
