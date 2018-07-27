@@ -2,7 +2,7 @@
 Scale elements with your fingers.
 
 ## Usage
-**Note:** This is still very early version, rather a prototype.
+**Note:** This is a prototype.
 
 ### initialize and subscribe:
 ```javascript
