@@ -1,10 +1,13 @@
 # Touch Scale
-Scale elements with your fingers.
+Scale elements with your fingers
 
 ## Usage
-**Note:** This is a prototype.
+**Note:** This is a prototype
 
-### initialize and subscribe:
+### initialize and subscribe
+
+Let's suppose, we use the [hammerjs](https://hammerjs.github.io/) touch gestures library for pinch events
+
 ```javascript
 const el = document.querySelector('#my-scalable-el')
 const scaler = new TouchScale(el)
@@ -60,17 +63,5 @@ If you don't use sass, then add this to your container and element:
   flex-grow: 0;
 
   /* my custom styles */
-}
-```
-
-Animation (**note** the specificity - the transition class is attached to the element selector):
-
-```css
-.my-scalable-element.my-transition-class {
-  /*
-  your transition code, e.g.:
-  transition: transform 700ms ease-in;
-
-  */
 }
 ```
