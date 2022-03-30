@@ -2,7 +2,7 @@
   "name": "touch-scale",
   "version": "0.0.1",
   "main": "dist/touch-scale.js",
-  "author": "spti",
+  "author": "gottfried",
   "license": "MIT",
   "scripts": {
     "build": "gulp build",
